@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { VoucherService } from './voucher.service';
 import { CreateVoucherDto } from './values/createVoucherDto';
+import { Voucher } from './voucher.schema';
 
 @Controller()
 export class VoucherController {
@@ -12,10 +13,10 @@ export class VoucherController {
   }
 
   @Post()
-  create(
+  async create(
     @Body()
     createVoucherDto: CreateVoucherDto,
-  ): string {
-    return this.appService.save(createVoucherDto);
+  ): Promise<Voucher> {
+    return await this.appService.save(createVoucherDto);
   }
 }

@@ -2,8 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { VoucherModule } from '../src/voucherModule';
+import { Connection, Model } from 'mongoose';
+import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
+import { Voucher } from '../src/voucher.schema';
 
-describe('AppController (e2e)', () => {
+describe('Voucher Controller (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -12,7 +15,14 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    moduleFixture.get<Model<Voucher>>(getModelToken(Voucher.name));
+
     await app.init();
+  });
+
+  afterEach(async () => {
+    await (app.get(getConnectionToken()) as Connection).db.dropDatabase();
+    await app.close();
   });
 
   it('/ (GET)', () => {
@@ -27,6 +37,10 @@ describe('AppController (e2e)', () => {
       .post('/')
       .send({ number: 2, value: 3 })
       .expect(201)
-      .expect('5');
+      .expect((result) => {
+        expect(result.body).toBeDefined();
+        expect(result.body.number).toStrictEqual(2);
+        expect(result.body.value).toStrictEqual(3);
+      });
   });
 });
