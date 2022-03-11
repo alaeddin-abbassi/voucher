@@ -3,10 +3,8 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Voucher extends Document {
-  //TODO make unique
-  @Prop({ required: true })
-  number: number;
-
+  @Prop({ required: true, unique: true, length: 8 })
+  code: number;
   @Prop({ required: true })
   value: number;
 }

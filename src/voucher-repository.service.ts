@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVoucherDto } from './values/createVoucherDto';
 import { Voucher } from './voucher.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class VoucherService {
+export class VoucherRepository {
   constructor(
     @InjectModel(Voucher.name) private voucherModel: Model<Voucher>,
   ) {}
@@ -14,8 +13,11 @@ export class VoucherService {
     return 'Make the voucher world great a gain!';
   }
 
-  async save(dto: CreateVoucherDto): Promise<Voucher> {
-    const newVoucher = await new this.voucherModel(dto);
+  async save(number: number): Promise<Voucher> {
+    const newVoucher = await new this.voucherModel({
+      code: Math.floor(Math.random() * (99999999 - 10000000 + 1) + 10000000),
+      value: number,
+    });
     return await newVoucher.save();
   }
 }

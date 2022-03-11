@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { VoucherController } from './voucherController';
-import { VoucherService } from './voucher.service';
+import { VoucherRepository } from './voucher-repository.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Voucher, VoucherSchema } from './voucher.schema';
 
@@ -10,6 +10,6 @@ import { Voucher, VoucherSchema } from './voucher.schema';
     MongooseModule.forFeature([{ name: Voucher.name, schema: VoucherSchema }]),
   ],
   controllers: [VoucherController],
-  providers: [VoucherService],
+  providers: [VoucherRepository],
 })
 export class VoucherModule {}

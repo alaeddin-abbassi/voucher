@@ -39,8 +39,7 @@ describe('Voucher Controller (e2e)', () => {
       .expect(201)
       .expect((result) => {
         expect(result.body).toBeDefined();
-        expect(result.body.number).toStrictEqual(2);
-        expect(result.body.value).toStrictEqual(3);
+        expect(result.body.length).toStrictEqual(2);
       });
   });
 });

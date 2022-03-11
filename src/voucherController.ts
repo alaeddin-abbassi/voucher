@@ -1,22 +1,26 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { VoucherService } from './voucher.service';
+import { VoucherRepository } from './voucher-repository.service';
 import { CreateVoucherDto } from './values/createVoucherDto';
-import { Voucher } from './voucher.schema';
 
 @Controller()
 export class VoucherController {
-  constructor(private readonly appService: VoucherService) {}
+  constructor(private readonly repository: VoucherRepository) {}
 
   @Get()
   getHelloVoucher(): string {
-    return this.appService.getHelloVoucher();
+    return this.repository.getHelloVoucher();
   }
 
   @Post()
   async create(
     @Body()
     createVoucherDto: CreateVoucherDto,
-  ): Promise<Voucher> {
-    return await this.appService.save(createVoucherDto);
+  ): Promise<number[]> {
+    const codes: number[] = [];
+    for (let i = 1; i <= createVoucherDto.number; i++) {
+      const voucher = await this.repository.save(createVoucherDto.value);
+      codes.push(voucher.code);
+    }
+    return codes;
   }
 }

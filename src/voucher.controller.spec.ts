@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { VoucherController } from './voucherController';
-import { VoucherService } from './voucher.service';
+import { VoucherRepository } from './voucher-repository.service';
 import { Voucher } from './voucher.schema';
 
-describe('AppController', () => {
-  let appController: VoucherController;
-  const voucher = { number: 2, value: 3 } as Voucher;
+describe('Voucher Controller', () => {
+  let voucherController: VoucherController;
+
+  const voucher = { code: 12345678, value: 3.5 } as Voucher;
   const mockVoucherService = {
     save: jest.fn().mockReturnValue(Promise.resolve(voucher)),
     getHelloVoucher: jest
@@ -13,30 +14,30 @@ describe('AppController', () => {
       .mockReturnValue('Make the voucher world great a gain!'),
   };
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const voucherApp: TestingModule = await Test.createTestingModule({
       controllers: [VoucherController],
       providers: [
-        VoucherService,
+        VoucherRepository,
         {
-          provide: VoucherService,
+          provide: VoucherRepository,
           useValue: mockVoucherService,
         },
       ],
     }).compile();
-
-    appController = app.get<VoucherController>(VoucherController);
+    voucherController = voucherApp.get<VoucherController>(VoucherController);
   });
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHelloVoucher()).toBe(
+      expect(voucherController.getHelloVoucher()).toBe(
         'Make the voucher world great a gain!',
       );
     });
     it('should create voucher', async () => {
-      expect(await appController.create({ number: 2, value: 3 })).toStrictEqual(
-        { number: 2, value: 3 },
-      );
+      //TODO make test with number >1
+      const dto = { number: 1, value: 3.5 };
+      const result = await voucherController.create(dto);
+      expect(result).toStrictEqual([12345678]);
     });
   });
 });
