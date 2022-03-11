@@ -1,30 +1,42 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+## Coding Challenge
+```
+Your task is to create an application, that can be used to manage vouchers.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The app should be developed in typescript running in a docker container and should offer REST services for the functionality below. A mongodb or another document oriented database should be used as database running in another container. To keep things simple there is no need to have persistent storage, so it's ok if the data is gone after container shutdown.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+It should be possible to create, list and update vouchers.
+A voucher should consist of two attributes : code, value
+
+creation:
+in parameter number of vouchers to be generated, value
+return list of generated codes and http 200 in case of success, otherwise http 500
+The allowed voucher value should only be positive. The code should be randomly created at generation, consisting of 8 random digits
+Example :  { "code" : "17262837", "value": 50 }
+
+list:
+in parameter -
+return list of vouchers including code and value
+
+update
+in parameter code, value
+return http 200 in case of success, otherwise http 500
+should update the value of the code. The allowed voucher value should only be positive
+
+The project should contain instructions on how to build and how to run.
+
+A good way to share is a github project, other options are also possible.
+
+If you have any questions feel free to ask.
+```
+
+## Why NestJs?
+
+##############
+
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Application to manage vouchers
 
 ## Installation
 
@@ -44,6 +56,18 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+## How to use swagger
+
+```bash
+ #run the application with
+$ npm run start
+```
+
+```bash
+#call the url
+ $  http://localhost:3000/api
+```
+
 
 ## Test
 
