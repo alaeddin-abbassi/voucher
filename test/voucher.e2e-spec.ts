@@ -27,14 +27,14 @@ describe('Voucher Controller (e2e)', () => {
 
   it('/ (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/voucher')
       .expect(200)
       .expect('Make the voucher world great a gain!');
   });
 
   it('/ (POST voucher)', () => {
     return request(app.getHttpServer())
-      .post('/')
+      .post('/voucher')
       .send({ number: 2, value: 3 })
       .expect(201)
       .expect((result) => {

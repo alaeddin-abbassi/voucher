@@ -1,26 +1,46 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { VoucherRepository } from './voucher-repository.service';
+import {
+  Body,
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Post,
+} from '@nestjs/common';
+import { VoucherService } from './voucher.service';
 import { CreateVoucherDto } from './values/createVoucherDto';
+import {
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+} from '@nestjs/swagger';
 
-@Controller()
+@Controller('voucher')
 export class VoucherController {
-  constructor(private readonly repository: VoucherRepository) {}
+  constructor(private readonly service: VoucherService) {}
 
   @Get()
   getHelloVoucher(): string {
-    return this.repository.getHelloVoucher();
+    return this.service.getHelloVoucher();
   }
 
   @Post()
+  @ApiCreatedResponse({
+    type: [Number],
+    description: 'created codes',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'unprocessable entity',
+    type: InternalServerErrorException,
+  })
   async create(
     @Body()
     createVoucherDto: CreateVoucherDto,
   ): Promise<number[]> {
-    const codes: number[] = [];
-    for (let i = 1; i <= createVoucherDto.number; i++) {
-      const voucher = await this.repository.save(createVoucherDto.value);
-      codes.push(voucher.code);
-    }
-    return codes;
+    return await this.service
+      .create(createVoucherDto)
+      .then((result) => result)
+      .catch((error) => {
+        throw new InternalServerErrorException(
+          `can not create vouchers because: ${error.message}`,
+        );
+      });
   }
 }

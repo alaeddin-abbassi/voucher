@@ -1,14 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { VoucherController } from './voucherController';
-import { VoucherRepository } from './voucher-repository.service';
-import { Voucher } from './voucher.schema';
+import { VoucherService } from './voucher.service';
 
+const expectedCodes = [12345678, 33345678, 123456543, 123983412];
 describe('Voucher Controller', () => {
   let voucherController: VoucherController;
 
-  const voucher = { code: 12345678, value: 3.5 } as Voucher;
   const mockVoucherService = {
-    save: jest.fn().mockReturnValue(Promise.resolve(voucher)),
+    create: jest.fn().mockReturnValue(Promise.resolve(expectedCodes)),
     getHelloVoucher: jest
       .fn()
       .mockReturnValue('Make the voucher world great a gain!'),
@@ -17,9 +16,9 @@ describe('Voucher Controller', () => {
     const voucherApp: TestingModule = await Test.createTestingModule({
       controllers: [VoucherController],
       providers: [
-        VoucherRepository,
+        VoucherService,
         {
-          provide: VoucherRepository,
+          provide: VoucherService,
           useValue: mockVoucherService,
         },
       ],
@@ -34,10 +33,9 @@ describe('Voucher Controller', () => {
       );
     });
     it('should create voucher', async () => {
-      //TODO make test with number >1
       const dto = { number: 1, value: 3.5 };
       const result = await voucherController.create(dto);
-      expect(result).toStrictEqual([12345678]);
+      expect(result).toStrictEqual(expectedCodes);
     });
   });
 });

@@ -9,10 +9,6 @@ export class VoucherRepository {
     @InjectModel(Voucher.name) private voucherModel: Model<Voucher>,
   ) {}
 
-  getHelloVoucher(): string {
-    return 'Make the voucher world great a gain!';
-  }
-
   async save(number: number): Promise<Voucher> {
     const newVoucher = await new this.voucherModel({
       code: Math.floor(Math.random() * (99999999 - 10000000 + 1) + 10000000),

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class CreateVoucherDto {
   @ApiProperty({
@@ -8,7 +7,7 @@ export class CreateVoucherDto {
     required: true,
   })
   @IsNotEmpty()
-  @Expose()
+  @IsPositive()
   number: number;
 
   @ApiProperty({
@@ -16,6 +15,6 @@ export class CreateVoucherDto {
     required: true,
   })
   @IsNotEmpty()
-  @Expose()
+  @IsPositive()
   value: number;
 }
