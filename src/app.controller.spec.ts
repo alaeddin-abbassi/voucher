@@ -16,7 +16,12 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Make the voucher world great a gain!');
+      expect(appController.getHelloVoucher()).toBe(
+        'Make the voucher world great a gain!',
+      );
+    });
+    it('should create voucher', () => {
+      expect(appController.create({ number: 2, value: 3 })).toStrictEqual('5');
     });
   });
 });

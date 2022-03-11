@@ -21,4 +21,12 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Make the voucher world great a gain!');
   });
+
+  it('/ (POST voucher)', () => {
+    return request(app.getHttpServer())
+      .post('/')
+      .send({ number: 2, value: 3 })
+      .expect(201)
+      .expect('5');
+  });
 });
