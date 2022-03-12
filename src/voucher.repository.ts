@@ -16,4 +16,11 @@ export class VoucherRepository {
     });
     return await newVoucher.save();
   }
+
+  async findAll(): Promise<Voucher[]> {
+    return await this.voucherModel
+      .find()
+      .select({ code: 1, value: 1, _id: 0 })
+      .exec();
+  }
 }

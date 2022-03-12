@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVoucherDto } from './values/createVoucherDto';
 import { VoucherRepository } from './voucher.repository';
+import { Voucher } from './voucher.schema';
 
 @Injectable()
 export class VoucherService {
@@ -17,5 +18,10 @@ export class VoucherService {
       codes.push(voucher.code);
     }
     return codes;
+  }
+
+  async list(): Promise<Voucher[]> {
+    //TODO map to GetVoucherDTO
+    return await this.repository.findAll();
   }
 }
