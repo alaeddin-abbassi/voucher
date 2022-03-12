@@ -18,7 +18,7 @@ services:
       - /usr/src/app/node_modules
     restart: unless-stopped
     environment:
-      MONGO_URI: mongodb://root:example@$mongodb:27017/nest?authSource=admin
+      MONGO_URL: mongodb
 
   mongodb:
     image: mongo:5.0.0

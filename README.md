@@ -30,12 +30,6 @@ A good way to share is a github project, other options are also possible.
 
 If you have any questions feel free to ask.
 ```
-
-## Why NestJs?
-
-##############
-
-
 ## Description
 
 Application to manage vouchers
@@ -61,13 +55,16 @@ $ npm run start:prod
 ## How to use swagger
 
 ```bash
-# run docker 
+# run swagger from docker 
 $ docker-compose up -d 
  #run the application with
-$ npm run start
+$ http://localhost:3000/api
+
 ```
 
 ```bash
+# run swagger locally
+$ npm run start
 #call the url
  $  http://localhost:3000/api
 ```
@@ -76,10 +73,10 @@ $ npm run start
 ## Test
 
 ```bash
-# unit tests
+# run all tests
 $ npm run test
 
-# e2e tests
+# run only e2e tests
 $ npm run test:e2e
 
 # test coverage
