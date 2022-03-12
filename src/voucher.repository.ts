@@ -25,9 +25,15 @@ export class VoucherRepository {
   }
 
   async update(code: number, value: number) {
-    return this.voucherModel.findOneAndUpdate(
-      { code: code },
-      { $set: { value: value } },
+    const filter = { code: code };
+    const update = { value: value };
+    const newVoucher = await this.voucherModel.findOneAndUpdate(
+      filter,
+      update,
+      {
+        new: true,
+      },
     );
+    return { code: newVoucher.code, value: newVoucher.value };
   }
 }

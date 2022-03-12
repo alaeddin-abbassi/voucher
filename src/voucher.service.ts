@@ -7,6 +7,7 @@ import { UpdateVoucherDto } from './values/UpdateVoucherDto';
 @Injectable()
 export class VoucherService {
   constructor(private readonly repository: VoucherRepository) {}
+
   getHelloVoucher(): string {
     return 'Make the voucher world great a gain!';
   }

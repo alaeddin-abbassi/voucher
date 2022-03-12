@@ -60,18 +60,21 @@ describe('Voucher Controller (e2e)', () => {
       });
   });
 
-  //TODO FIX
   it('/voucher/:code - update voucher by code', async () => {
     const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
     await conn.collection('vouchers').insertOne({ code: 123456779, value: 1 });
 
     return request(app.getHttpServer())
-      .put('/voucher/list/123456779')
-      .send({ value: 1 })
+      .put('/voucher/123456779')
+      .send({ value: 13.7 })
       .expect(200)
       .expect((result) => {
+        expect(result.statusCode).toStrictEqual(200);
         expect(result.body).toBeDefined();
-        expect(result.body.length).toStrictEqual(1);
+        expect(result.body).toStrictEqual({
+          code: 123456779,
+          value: 13.7,
+        });
       });
   });
 });

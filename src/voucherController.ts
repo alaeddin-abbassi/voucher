@@ -82,10 +82,15 @@ export class VoucherController {
   async update(
     @Param('code') code: number,
     @Body() updateVoucherDto: UpdateVoucherDto,
-  ) {
-    await this.service
+  ): Promise<GetVoucherDto> {
+    return await this.service
       .update(code, updateVoucherDto)
-      .then((result) => result)
+      .then((result) => {
+        return new GetVoucherDto({
+          code: result.code,
+          value: result.value,
+        });
+      })
       .catch((error) => {
         throw new InternalServerErrorException(
           `can not create vouchers because: ${error.message}`,

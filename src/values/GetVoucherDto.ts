@@ -17,4 +17,8 @@ export class GetVoucherDto {
   @IsNotEmpty()
   @IsPositive()
   value: number;
+
+  constructor(partial: Partial<GetVoucherDto>) {
+    Object.assign(this, partial);
+  }
 }
