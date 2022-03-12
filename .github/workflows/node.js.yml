@@ -31,8 +31,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Install all exact version dependencies
-      run: npm ci
 
     - name: Build
       run: npm run build --if-present
