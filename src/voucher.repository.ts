@@ -23,4 +23,11 @@ export class VoucherRepository {
       .select({ code: 1, value: 1, _id: 0 })
       .exec();
   }
+
+  async update(code: number, value: number) {
+    return this.voucherModel.findOneAndUpdate(
+      { code: code },
+      { $set: { value: value } },
+    );
+  }
 }

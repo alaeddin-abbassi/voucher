@@ -44,7 +44,7 @@ describe('Voucher Controller (e2e)', () => {
       });
   });
 
-  it('/ (List all vouchers)', async () => {
+  it('/voucher/list - List all vouchers', async () => {
     // sorry ich bin faul direkt in die DB zu schreiben
 
     const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
@@ -57,6 +57,22 @@ describe('Voucher Controller (e2e)', () => {
       .expect((result) => {
         expect(result.body).toBeDefined();
         expect(result.body.length).toStrictEqual(3);
+      });
+  });
+
+  it('/voucher/:code - update voucher by code', async () => {
+    // sorry ich bin faul direkt in die DB zu schreiben
+
+    const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
+    await conn.collection('vouchers').insertOne({ code: 123456779, value: 1 });
+
+    return request(app.getHttpServer())
+      .put('/voucher/list/123456779')
+      .send({ value: 1 })
+      .expect(200)
+      .expect((result) => {
+        expect(result.body).toBeDefined();
+        expect(result.body.length).toStrictEqual(1);
       });
   });
 });

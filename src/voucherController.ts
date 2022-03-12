@@ -3,7 +3,9 @@ import {
   Controller,
   Get,
   InternalServerErrorException,
+  Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { VoucherService } from './voucher.service';
 import { CreateVoucherDto } from './values/createVoucherDto';
@@ -14,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { Voucher } from './voucher.schema';
 import { GetVoucherDto } from './values/GetVoucherDto';
+import { UpdateVoucherDto } from './values/UpdateVoucherDto';
 
 @Controller('voucher')
 export class VoucherController {
@@ -59,6 +62,29 @@ export class VoucherController {
   list(): Promise<Voucher[] | void> {
     return this.service
       .list()
+      .then((result) => result)
+      .catch((error) => {
+        throw new InternalServerErrorException(
+          `can not create vouchers because: ${error.message}`,
+        );
+      });
+  }
+
+  @ApiOkResponse({
+    description: 'voucher retrieved successfully',
+    type: [GetVoucherDto],
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal Server Error',
+    type: InternalServerErrorException,
+  })
+  @Put('/:code')
+  async update(
+    @Param('code') code: number,
+    @Body() updateVoucherDto: UpdateVoucherDto,
+  ) {
+    await this.service
+      .update(code, updateVoucherDto)
       .then((result) => result)
       .catch((error) => {
         throw new InternalServerErrorException(

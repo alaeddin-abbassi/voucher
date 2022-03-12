@@ -2,7 +2,9 @@
 ```
 Your task is to create an application, that can be used to manage vouchers.
 
-The app should be developed in typescript running in a docker container and should offer REST services for the functionality below. A mongodb or another document oriented database should be used as database running in another container. To keep things simple there is no need to have persistent storage, so it's ok if the data is gone after container shutdown.
+The app should be developed in typescript running in a docker container and should offer REST services for the functionality below. 
+A mongodb or another document oriented database should be used as database running in another container. 
+To keep things simple there is no need to have persistent storage, so it's ok if the data is gone after container shutdown.
 
 It should be possible to create, list and update vouchers.
 A voucher should consist of two attributes : code, value
@@ -59,6 +61,8 @@ $ npm run start:prod
 ## How to use swagger
 
 ```bash
+# run docker 
+$ docker-compose up -d 
  #run the application with
 $ npm run start
 ```
