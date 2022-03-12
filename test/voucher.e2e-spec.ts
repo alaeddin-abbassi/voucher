@@ -45,12 +45,12 @@ describe('Voucher Controller (e2e)', () => {
   });
 
   it('/voucher/list - List all vouchers', async () => {
-    // sorry ich bin faul direkt in die DB zu schreiben
-
+    //given
     const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
     await conn.collection('vouchers').insertOne({ code: 123456779, value: 1 });
     await conn.collection('vouchers').insertOne({ code: 123454443, value: 3 });
     await conn.collection('vouchers').insertOne({ code: 123456231, value: 22 });
+
     return request(app.getHttpServer())
       .get('/voucher/list')
       .expect(200)
@@ -60,9 +60,8 @@ describe('Voucher Controller (e2e)', () => {
       });
   });
 
+  //TODO FIX
   it('/voucher/:code - update voucher by code', async () => {
-    // sorry ich bin faul direkt in die DB zu schreiben
-
     const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
     await conn.collection('vouchers').insertOne({ code: 123456779, value: 1 });
 
