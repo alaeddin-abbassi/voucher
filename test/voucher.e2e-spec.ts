@@ -46,7 +46,9 @@ describe('Voucher Controller (e2e)', () => {
 
   it('/voucher/list - List all vouchers', async () => {
     //given
-    const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
+    const conn = mongoose.createConnection(
+      'mongodb://root:example@localhost:27017/nest?authSource=admin',
+    );
     await conn.collection('vouchers').insertOne({ code: 123456779, value: 1 });
     await conn.collection('vouchers').insertOne({ code: 123454443, value: 3 });
     await conn.collection('vouchers').insertOne({ code: 123456231, value: 22 });
@@ -61,7 +63,9 @@ describe('Voucher Controller (e2e)', () => {
   });
 
   it('/voucher/:code - update voucher by code', async () => {
-    const conn = mongoose.createConnection('mongodb://localhost:27017/nest');
+    const conn = mongoose.createConnection(
+      'mongodb://root:example@localhost:27017/nest?authSource=admin',
+    );
     await conn.collection('vouchers').insertOne({ code: 123456779, value: 1 });
 
     return request(app.getHttpServer())
