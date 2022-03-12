@@ -1,20 +1,39 @@
-version: "3"
-
+version: '3.9'
 services:
-  api:
-    image: node:14
-    volumes:
-      - .:/app
+  voucher:
+    container_name: voucher-api
+    image: voucher-api:1.0.0
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+    command: npm run start:debug
     ports:
       - "3000:3000"
-    depends_on:
-      - mongodb
+      - "9229:9229"
+    networks:
+      - voucher-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
     environment:
-      NODE_ENV: development
+      MONGO_URL: mongodb
 
   mongodb:
-    image: mongo:latest
+    image: mongo:5.0.0
+    container_name: voucher-mongodb
     environment:
-      - MONGODB_DATABASE="nest"
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - voucher-network
     ports:
-      - 27017:27017
+      - "27017:27017"
+volumes:
+  mongodb-data:
+    name: mongodb-data
+networks:
+  voucher-network:
